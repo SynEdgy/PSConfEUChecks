@@ -77,9 +77,14 @@ Describe 'Running PSConfEU 2023 Tests' {
     )
 
     Describe "Adding sessions" {
-        Describe "<Day>" -ForEach $Agenda {
-            Context "<_.Time>" -ForEach $_.Sessions {
-                It "<_>" -ForEach $_.Titles {
+
+        $agenda = Get-PSConfEUSchedule -output object | Group-Object Day
+
+        Describe "<_.Name>" -ForEach @($agenda.GetEnumerator()) {
+            $times = @($_.Group | Group-Object StartTime)
+            Context "<_.Name>" -ForEach $times {
+                $sessions = @($_.Group | Foreach-Object { @( $_."A1 (Track 1)", $_."A2 (Track 2)", $_."A3 (Track 3)", $_."B (Track 4)" | Where-Object { -not [string]::IsNullOrWhitespace($_)} | ForEach-Object { $_ -replace "\n", " - "})})
+                It "<_>" -ForEach $Sessions {
                     Start-Sleep -Milliseconds (Get-Random -Minimum 100 -Maximum 500)
                 }
             }
