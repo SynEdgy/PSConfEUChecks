@@ -36,46 +36,6 @@ Describe 'Running PSConfEU 2023 Tests' {
         }
     }
 
-    $agenda = @(
-        @{
-            Day = "Monday"
-            Sessions = @(
-                @{
-                    Time = "9:00"
-                    Titles = @(
-                        "Keynote"
-                    )
-                }
-                @{
-                    Time = "11:00"
-                    Titles = @(
-                        "Pester is the best"
-                        "Talk2"
-                    )
-                }
-            )
-        },
-        @{
-            Day = "Tuesday"
-            Sessions = @(
-                @{ 
-                    Time = "9:00"
-                    Titles = @(
-                        "talk 1"
-                        "Talk 2"
-                    )
-                }
-                @{
-                    Time = "10:00"
-                    Titles = @(
-                        "talk 1"
-                        "talk 2"
-                    )
-                }
-            )
-        }
-    )
-
     Describe "Adding sessions" {
 
         $agenda = Get-PSConfEUSchedule -output object | Group-Object Day
